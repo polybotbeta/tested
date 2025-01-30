@@ -6,19 +6,52 @@
     <title>Создать кампанию</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { padding: 20px; font-family: Arial; }
-        input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
-        textarea#businessDescription { height: 150px; } /* Увеличиваем высоту текстового поля */
+        body {
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            color: #1a237e; /* Темно-синий цвет */
+        }
+
+        h3 {
+            margin-bottom: 5px; /* Уменьшен отступ снизу */
+            font-weight: 500; /* Менее жирный шрифт */
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0; /* Уменьшены отступы сверху и снизу */
+            box-sizing: border-box;
+            border: 1px solid #ccc; /* Добавляем границу */
+            border-radius: 4px; /* Скругленные края */
+        }
+
+        textarea#businessDescription {
+            height: 150px;
+        }
+
+        button {
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0d47a1; /* Более темный синий при наведении */
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h3>Название бизнеса</h3>
+    <h3>Название бизнеса:</h3>
     <input type="text" id="businessName" placeholder="Введите название">
 
-    <h3>Тематика бизнеса</h3>
+    <h3>Тематика бизнеса:</h3>
     <input type="text" id="businessTheme" placeholder="Введите тематику">
 
-    <h3>Описание бизнеса</h3>
+    <h3>Описание бизнеса:</h3>
     <textarea id="businessDescription" placeholder="Опишите деятельность бизнеса"></textarea>
 
     <button onclick="submitForm()">Создать</button>
@@ -38,7 +71,7 @@
                 Telegram.WebApp.sendData(JSON.stringify(data));
                 Telegram.WebApp.close();
             } else {
-                alert("Заполните все поля!"); 
+                alert("Заполните все поля!");
             }
         }
 
