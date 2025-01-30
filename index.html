@@ -7,7 +7,8 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { padding: 20px; font-family: Arial; }
-        input, select, button { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        textarea#businessDescription { height: 150px; } /* Увеличиваем высоту текстового поля */
     </style>
 </head>
 <body>
@@ -15,13 +16,7 @@
     <input type="text" id="campaignName" placeholder="Введите название">
 
     <h3>Тематика бизнеса</h3>
-    <select id="businessTheme">
-        <option value="">Выберите тематику</option>
-        <option value="restaurants">Рестораны</option>
-        <option value="retail">Розничная торговля</option>
-        <option value="services">Услуги</option>
-        <!-- Добавьте другие варианты -->
-    </select>
+    <input type="text" id="businessTheme" placeholder="Введите тематику">
 
     <h3>Чем занимается бизнес</h3>
     <textarea id="businessDescription" placeholder="Опишите деятельность бизнеса"></textarea>
@@ -43,7 +38,7 @@
                 Telegram.WebApp.sendData(JSON.stringify(data));
                 Telegram.WebApp.close();
             } else {
-                alert("Заполните все поля!"); //  Простая валидация
+                alert("Заполните все поля!"); 
             }
         }
 
