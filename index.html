@@ -1,82 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создать кампанию</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Создание кампании</title>
     <style>
         body {
-            padding: 20px;
-            font-family: 'Montserrat', sans-serif;
-            color: #1a237e; /* Темно-синий цвет */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .form-container {
+            max-width: 500px;
+            width: 90%;
+            padding: 25px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+         h2 {
+             text-align: center;
+             margin-bottom: 20px;
+             color: #495057;
+             font-weight: 600;
+         }
+         .form-group {
+             margin-bottom: 20px;
+             position: relative; /* Для отображения ошибок */
+         }
+         .form-group label {
+            display: block;
+             margin-bottom: 5px;
+             color: #495057;
+             font-weight: 500;
+         }
+         .form-group input,
+         .form-group textarea {
+             width: calc(100% - 22px); /* Учитываем паддинг */
+            padding: 11px;
+             border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            box-sizing: border-box; /* Чтобы padding не увеличивал ширину */
+
         }
 
-        h3 {
-            margin-bottom: 5px; /* Уменьшен отступ снизу */
-            font-weight: 500; /* Менее жирный шрифт */
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
-
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 15px 0; /* Уменьшены отступы сверху и снизу */
-            box-sizing: border-box;
-            border: 1px solid #ccc; /* Добавляем границу */
-            border-radius: 4px; /* Скругленные края */
+        .form-group textarea {
+            height: 120px; /* Уменьшена высота */
+            resize: vertical;
         }
-
-        textarea#businessDescription {
-            height: 150px;
-        }
-
-        button {
-            background-color: #1a237e;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        button:hover {
-            background-color: #0d47a1; /* Более темный синий при наведении */
-        }
+         .error-message {
+             color: #dc3545;
+             font-size: 0.9rem;
+             margin-top: 3px;
+             display: none;
+             position: absolute;
+         }
+         button {
+             display: block;
+             width: 100%;
+            padding: 12px;
+             background-color: #007bff;
+             color: #fff;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             font-size: 17px;
+             transition: background-color 0.2s;
+         }
+         button:hover {
+             background-color: #0056b3;
+         }
+         button:focus {
+              outline: none;
+         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h3>Название бизнеса:</h3>
-    <input type="text" id="businessName" placeholder="Введите название">
-
-    <h3>Тематика бизнеса:</h3>
-    <input type="text" id="businessTheme" placeholder="Введите тематику">
-
-    <h3>Описание бизнеса:</h3>
-    <textarea id="businessDescription" placeholder="Опишите деятельность бизнеса"></textarea>
-
-    <button onclick="submitForm()">Создать</button>
+    <div class="form-container">
+        <h2>Создание кампании</h2>
+        <form id="campaignForm">
+            <div class="form-group">
+                <label for="businessName">Название бизнеса:</label>
+                <input type="text" id="businessName" name="businessName" placeholder="Введите название" required>
+                <span class="error-message" id="businessNameError">Это поле обязательно</span>
+            </div>
+            <div class="form-group">
+                <label for="businessTheme">Тематика:</label>
+                <input type="text" id="businessTheme" name="businessTheme" placeholder="Введите тематику" required>
+                 <span class="error-message" id="businessThemeError">Это поле обязательно</span>
+            </div>
+            <div class="form-group">
+                <label for="businessDescription">Описание:</label>
+                <textarea id="businessDescription" name="businessDescription" placeholder="Введите описание" required></textarea>
+                <span class="error-message" id="businessDescriptionError">Это поле обязательно</span>
+            </div>
+            <button type="submit">Создать кампанию</button>
+        </form>
+    </div>
 
     <script>
-        function submitForm() {
-            const businessName = document.getElementById('businessName').value;
-            const businessTheme = document.getElementById('businessTheme').value;
-            const businessDescription = document.getElementById('businessDescription').value;
+        const form = document.getElementById('campaignForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+             let isValid = true;
+             const nameField = document.getElementById('businessName');
+             const themeField = document.getElementById('businessTheme');
+             const descriptionField = document.getElementById('businessDescription');
+             const nameError = document.getElementById('businessNameError');
+             const themeError = document.getElementById('businessThemeError');
+             const descriptionError = document.getElementById('businessDescriptionError');
+            //Валидация
+             if (!nameField.value.trim()) {
+                 nameError.style.display = "block"
+                isValid = false;
+             } else {
+                 nameError.style.display = "none"
+             }
 
-            if (businessName.trim() && businessTheme.trim() && businessDescription.trim()) {
-                const data = {
-                    businessName,
-                    businessTheme,
-                    businessDescription
-                };
-                Telegram.WebApp.sendData(JSON.stringify(data));
-                Telegram.WebApp.close();
-            } else {
-                alert("Заполните все поля!");
+             if (!themeField.value.trim()) {
+                 themeError.style.display = "block"
+                isValid = false;
+             } else {
+                 themeError.style.display = "none"
             }
-        }
 
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
+            if (!descriptionField.value.trim()) {
+                descriptionError.style.display = "block";
+                isValid = false;
+            } else {
+                descriptionError.style.display = "none"
+            }
+             if(isValid) {
+                 const formData = new FormData(form);
+                const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
+                window.Telegram.WebApp.sendData(jsonData);
+           }
+        });
+
     </script>
 </body>
 </html>
