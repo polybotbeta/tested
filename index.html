@@ -12,26 +12,26 @@
     </style>
 </head>
 <body>
-    <h3>Название кампании</h3>
-    <input type="text" id="campaignName" placeholder="Введите название">
+    <h3>Название бизнеса</h3>
+    <input type="text" id="businessName" placeholder="Введите название">
 
     <h3>Тематика бизнеса</h3>
     <input type="text" id="businessTheme" placeholder="Введите тематику">
 
-    <h3>Чем занимается бизнес</h3>
+    <h3>Описание бизнеса</h3>
     <textarea id="businessDescription" placeholder="Опишите деятельность бизнеса"></textarea>
 
     <button onclick="submitForm()">Создать</button>
 
     <script>
         function submitForm() {
-            const campaignName = document.getElementById('campaignName').value;
+            const businessName = document.getElementById('businessName').value;
             const businessTheme = document.getElementById('businessTheme').value;
             const businessDescription = document.getElementById('businessDescription').value;
 
-            if (campaignName.trim() && businessTheme.trim() && businessDescription.trim()) {
+            if (businessName.trim() && businessTheme.trim() && businessDescription.trim()) {
                 const data = {
-                    campaignName,
+                    businessName,
                     businessTheme,
                     businessDescription
                 };
